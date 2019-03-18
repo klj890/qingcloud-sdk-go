@@ -74,7 +74,7 @@ func (r *Request) Send() error {
 	if err != nil {
 		return err
 	}
-
+	
 	err = r.send()
 	if err != nil {
 		return err
