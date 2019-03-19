@@ -23,6 +23,11 @@ import (
 	"github.com/yunify/qingcloud-sdk-go/request/errors"
 )
 
+type Base struct {
+	Owner      *string `json:"owner" name:"owner"`
+	RootUserID *string `json:"root_user_id" name:"root_user_id"`
+}
+
 type App struct {
 	Abstraction           *string   `json:"abstraction" name:"abstraction"`
 	AppContractStatus     *string   `json:"app_contract_status" name:"app_contract_status"`
@@ -796,6 +801,7 @@ func (v *File) Validate() error {
 }
 
 type Image struct {
+	Base
 	AppBillingID  *string    `json:"app_billing_id" name:"app_billing_id"`
 	Architecture  *string    `json:"architecture" name:"architecture"`
 	BillingID     *string    `json:"billing_id" name:"billing_id"`
@@ -811,7 +817,7 @@ type Image struct {
 	ImageName     *string    `json:"image_name" name:"image_name"`
 	InstanceIDs   []*string  `json:"instance_ids" name:"instance_ids"`
 	OSFamily      *string    `json:"os_family" name:"os_family"`
-	Owner         *string    `json:"owner" name:"owner"`
+	//Owner         *string    `json:"owner" name:"owner"`
 	// Platform's available values: linux, windows
 	Platform *string `json:"platform" name:"platform"`
 	// ProcessorType's available values: 64bit, 32bit
@@ -975,6 +981,7 @@ func (v *ImageUser) Validate() error {
 }
 
 type Instance struct {
+	Base
 	AlarmStatus      *string        `json:"alarm_status" name:"alarm_status"`
 	CPUTopology      *string        `json:"cpu_topology" name:"cpu_topology"`
 	CreateTime       *time.Time     `json:"create_time" name:"create_time" format:"ISO 8601"`
@@ -1263,6 +1270,7 @@ func (v *KeyPair) Validate() error {
 }
 
 type LoadBalancer struct {
+	Base
 	Cluster     []*EIP     `json:"cluster" name:"cluster"`
 	CreateTime  *time.Time `json:"create_time" name:"create_time" format:"ISO 8601"`
 	Description *string    `json:"description" name:"description"`
@@ -1284,6 +1292,7 @@ type LoadBalancer struct {
 	// TransitionStatus's available values: creating, starting, stopping, updating, suspending, resuming, deleting
 	TransitionStatus *string `json:"transition_status" name:"transition_status"`
 	VxNetID          *string `json:"vxnet_id" name:"vxnet_id"`
+	ZoneID           *string `json:"zone_id" name:"zone_id"`
 }
 
 func (v *LoadBalancer) Validate() error {
@@ -1839,6 +1848,7 @@ func (v *QuotaLeft) Validate() error {
 }
 
 type RDB struct {
+	Base
 	// AlarmStatus's available values: ok, alarm, insufficient
 	AlarmStatus         *string    `json:"alarm_status" name:"alarm_status"`
 	AutoBackupTime      *int       `json:"auto_backup_time" name:"auto_backup_time"`
@@ -2144,6 +2154,7 @@ func (v *ResourceTypeCount) Validate() error {
 }
 
 type Router struct {
+	Base
 	CreateTime  *time.Time `json:"create_time" name:"create_time" format:"ISO 8601"`
 	Description *string    `json:"description" name:"description"`
 	DYNIPEnd    *string    `json:"dyn_ip_end" name:"dyn_ip_end"`
@@ -2168,12 +2179,9 @@ type Router struct {
 	TransitionStatus *string  `json:"transition_status" name:"transition_status"`
 	VpcNetwork       *string  `json:"vpc_network" name:"vpc_network"`
 	VxNets           []*VxNet `json:"vxnets" name:"vxnets"`
-	VpcID	*string `json:"vpc_id" name:"vpc_id"`
-	Cpu *int `json:"cpu" name:"cpu"`
-	Memory *int `json:"memory" name:"memory"`
-	Owner *string `json:"owner" name:"owner"`
-	RootUserID *string `json:"root_user_id" name:"root_user_id"`
-
+	VpcID            *string  `json:"vpc_id" name:"vpc_id"`
+	Cpu              *int     `json:"cpu" name:"cpu"`
+	Memory           *int     `json:"memory" name:"memory"`
 }
 
 func (v *Router) Validate() error {
@@ -2929,8 +2937,21 @@ func (v *Tag) Validate() error {
 }
 
 type User struct {
-	Email  *string `json:"email" name:"email"`
-	UserID *string `json:"user_id" name:"user_id"`
+	Email                  *string    `json:"email" name:"email"`
+	UserID                 *string    `json:"user_id" name:"user_id"`
+	Address                *string    `json:"address" name:"address"`
+	Balance                *string    `json:"balance" name:"balanc"`
+	ChangePasswdFirstLogin *int       `json:"change_passwd_first_login" name:"change_passwd_first_login"`
+	CreateTime             *time.Time `json:"create_time" name:"create_time" format:"ISO 8601"`
+	Currency               *string    `json:"currency" name:"currency"`
+	Gender				*string `json:"gender" name:"gender"`
+	NotifyEmail *string `json:"notify_email" name:"notify_email"`
+	PaidMode *string `json:"paid_mode" name:"paid_mode"`
+	RootUserID *string `json:"root_user_id" name:"root_user_id"`
+	UserName *string `json:"user_name" name:"user_name"`
+	Status *string `json:"status" name:"status"`
+	Role *string `json:"role" name:"role"`
+	Phone *string `json:"phone" name:"phone"`
 }
 
 func (v *User) Validate() error {
@@ -2939,16 +2960,17 @@ func (v *User) Validate() error {
 }
 
 type Volume struct {
+	Base
 	CreateTime         *time.Time  `json:"create_time" name:"create_time" format:"ISO 8601"`
 	Description        *string     `json:"description" name:"description"`
 	Device             *string     `json:"device" name:"device"`
 	Instance           *Instance   `json:"instance" name:"instance"`
 	Instances          []*Instance `json:"instances" name:"instances"`
 	LatestSnapshotTime *time.Time  `json:"latest_snapshot_time" name:"latest_snapshot_time" format:"ISO 8601"`
-	Owner              *string     `json:"owner" name:"owner"`
-	PlaceGroupID       *string     `json:"place_group_id" name:"place_group_id"`
-	Repl               *string     `json:"repl" name:"repl"`
-	Size               *int        `json:"size" name:"size"`
+	//Owner              *string     `json:"owner" name:"owner"`
+	PlaceGroupID *string `json:"place_group_id" name:"place_group_id"`
+	Repl         *string `json:"repl" name:"repl"`
+	Size         *int    `json:"size" name:"size"`
 	// Status's available values: pending, available, in-use, suspended, deleted, ceased
 	Status     *string    `json:"status" name:"status"`
 	StatusTime *time.Time `json:"status_time" name:"status_time" format:"ISO 8601"`

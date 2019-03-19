@@ -73,6 +73,30 @@ func (s *UserDataService) UploadUserDataAttachment(i *UploadUserDataAttachmentIn
 	return x, err
 }
 
+func (s *UserDataService) DescribeUsers(i *DescribeUsersInput) (*DescribeUsersOutput, error)  {
+	if i == nil{
+		i = &DescribeUsersInput{}
+	}
+	o := &data.Operation{
+		Config:        s.Config,
+		Properties:    s.Properties,
+		APIName:       "DescribeUsers",
+		RequestMethod: "GET",
+	}
+	x := &DescribeUsersOutput{}
+	r, err := request.New(o, i, x)
+	if err != nil {
+		return nil, err
+	}
+	err = r.Send()
+	if err != nil {
+		return nil, err
+	}
+
+	return x, nil
+}
+
+
 type UploadUserDataAttachmentInput struct {
 	AttachmentContent *string `json:"attachment_content" name:"attachment_content" location:"params"` // Required
 	AttachmentName    *string `json:"attachment_name" name:"attachment_name" location:"params"`
@@ -88,6 +112,27 @@ func (v *UploadUserDataAttachmentInput) Validate() error {
 	}
 
 	return nil
+}
+
+type DescribeUsersInput struct {
+	Email 		[]*string `json:"email" name:"email" location:"params"`
+	Users 		[]*string `json:"users" name:"users" location:"params"`
+	Limit 		*int      `json:"limit" name:"limit" default:"20" location:"params"`
+	Offset      *int      `json:"offset" name:"offset" default:"0" location:"params"`
+	Status      []*string `json:"status" name:"status" location:"params"`
+	Verbose		*int `json:"verbose" name:"verbose" location:"params"`
+}
+
+func (v *DescribeUsersInput) Validate() error  {
+	return nil
+}
+
+type DescribeUsersOutput struct {
+	Message      *string `json:"message" name:"message"`
+	Action       *string `json:"action" name:"action" location:"elements"`
+	RetCode      *int    `json:"ret_code" name:"ret_code" location:"elements"`
+	UserSet		 []*User `json:"user_set" name:"user_set" location:"elements"`
+	TotalCount              *int                    `json:"total_count" name:"total_count" location:"elements"`
 }
 
 type UploadUserDataAttachmentOutput struct {
