@@ -26,6 +26,7 @@ import (
 type Base struct {
 	Owner      *string `json:"owner" name:"owner"`
 	RootUserID *string `json:"root_user_id" name:"root_user_id"`
+	ZoneID *string `json:"zone_id" name:"zone_id"`
 }
 
 type App struct {
@@ -827,6 +828,7 @@ type Image struct {
 	RecommendedType *string `json:"recommended_type" name:"recommended_type"`
 	RootID          *string `json:"root_id" name:"root_id"`
 	Size            *int    `json:"size" name:"size"`
+	ImageSize *int `json:"image_size" name:"image_size"`
 	// Status's available values: pending, available, deprecated, suspended, deleted, ceased
 	Status     *string    `json:"status" name:"status"`
 	StatusTime *time.Time `json:"status_time" name:"status_time" format:"ISO 8601"`
@@ -836,6 +838,7 @@ type Image struct {
 	UIType           *string `json:"ui_type" name:"ui_type"`
 	// Visibility's available values: public, private
 	Visibility *string `json:"visibility" name:"visibility"`
+	Controller *string `json:"controller" name:"controller"`
 }
 
 func (v *Image) Validate() error {
@@ -1011,6 +1014,9 @@ type Instance struct {
 	VolumeIDs        []*string   `json:"volume_ids" name:"volume_ids"`
 	Volumes          []*Volume   `json:"volumes" name:"volumes"`
 	VxNets           []*NICVxNet `json:"vxnets" name:"vxnets"`
+	Controller *string `json:"controller" name:"controller"`
+	ZoneID *string `json:"zone_id" name:"zone_id"`
+
 }
 
 func (v *Instance) Validate() error {
@@ -1293,6 +1299,7 @@ type LoadBalancer struct {
 	TransitionStatus *string `json:"transition_status" name:"transition_status"`
 	VxNetID          *string `json:"vxnet_id" name:"vxnet_id"`
 	ZoneID           *string `json:"zone_id" name:"zone_id"`
+	Controller *string `json:"controller" name:"controller"`
 }
 
 func (v *LoadBalancer) Validate() error {
@@ -1829,7 +1836,7 @@ type NICVxNet struct {
 	Role      *int    `json:"role" name:"role"`
 	VxNetID   *string `json:"vxnet_id" name:"vxnet_id"`
 	VxNetName *string `json:"vxnet_name" name:"vxnet_name"`
-	VxNetType *int    `json:"vxnet_type" name:"vxnet_type"`
+	//VxNetType *int    `json:"vxnet_type" name:"vxnet_type"`
 }
 
 func (v *NICVxNet) Validate() error {
@@ -1870,6 +1877,7 @@ type RDB struct {
 	// TransitionStatus's available values: creating, stopping, starting, deleting, backup-creating, temp-creating, configuring, switching, invalid-tackling, resizing, suspending, ceasing, instance-ceasing, vxnet-leaving, vxnet-joining
 	TransitionStatus *string `json:"transition_status" name:"transition_status"`
 	VxNet            *VxNet  `json:"vxnet" name:"vxnet"`
+	Controller *string `json:"controller" name:"controller"`
 }
 
 func (v *RDB) Validate() error {
@@ -2182,6 +2190,7 @@ type Router struct {
 	VpcID            *string  `json:"vpc_id" name:"vpc_id"`
 	Cpu              *int     `json:"cpu" name:"cpu"`
 	Memory           *int     `json:"memory" name:"memory"`
+	Controller *string `json:"controller" name:"controller"`
 }
 
 func (v *Router) Validate() error {
@@ -2940,7 +2949,7 @@ type User struct {
 	Email                  *string    `json:"email" name:"email"`
 	UserID                 *string    `json:"user_id" name:"user_id"`
 	Address                *string    `json:"address" name:"address"`
-	Balance                *string    `json:"balance" name:"balanc"`
+	//Balance                *string    `json:"balance" name:"balance"`
 	ChangePasswdFirstLogin *int       `json:"change_passwd_first_login" name:"change_passwd_first_login"`
 	CreateTime             *time.Time `json:"create_time" name:"create_time" format:"ISO 8601"`
 	Currency               *string    `json:"currency" name:"currency"`
@@ -2982,6 +2991,8 @@ type Volume struct {
 	VolumeName       *string `json:"volume_name" name:"volume_name"`
 	// VolumeType's available values: 0, 1, 2, 3
 	VolumeType *int `json:"volume_type" name:"volume_type"`
+	Controller *string `json:"controller" name:"controller"`
+
 }
 
 func (v *Volume) Validate() error {
