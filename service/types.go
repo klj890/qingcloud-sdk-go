@@ -1300,6 +1300,9 @@ type LoadBalancer struct {
 	VxNetID          *string `json:"vxnet_id" name:"vxnet_id"`
 	ZoneID           *string `json:"zone_id" name:"zone_id"`
 	Controller *string `json:"controller" name:"controller"`
+	Cpu *int `json:"cpu" name:"cpu"`
+	Memory *int `json:"memory" name:"memory"`
+
 }
 
 func (v *LoadBalancer) Validate() error {
@@ -1860,7 +1863,7 @@ type RDB struct {
 	AlarmStatus         *string    `json:"alarm_status" name:"alarm_status"`
 	AutoBackupTime      *int       `json:"auto_backup_time" name:"auto_backup_time"`
 	AutoMinorVerUpgrade *int       `json:"auto_minor_ver_upgrade" name:"auto_minor_ver_upgrade"`
-	CreateTime          *string    `json:"create_time" name:"create_time"`
+	CreateTime          *time.Time    `json:"create_time" name:"create_time"`
 	Description         *string    `json:"description" name:"description"`
 	EngineVersion       *string    `json:"engine_version" name:"engine_version"`
 	LatestSnapshotTime  *time.Time `json:"latest_snapshot_time" name:"latest_snapshot_time" format:"ISO 8601"`
